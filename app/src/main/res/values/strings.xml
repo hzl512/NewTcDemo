@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">NewTcDemo</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="index_text0">查询</string>
+    <string name="index_text1">修改</string>
+    <string name="index_text2">添加</string>
+    <string name="index_text3">删除</string>
+
+</resources>
