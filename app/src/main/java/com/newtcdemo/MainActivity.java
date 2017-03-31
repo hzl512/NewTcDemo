@@ -15,10 +15,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.newtcdemo.eventbus.model.MessageEvent;
 import com.newtcdemo.fragments.TestFragment0;
 import com.newtcdemo.fragments.TestFragment1;
 import com.newtcdemo.fragments.TestFragment2;
 import com.newtcdemo.fragments.TestFragment3;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +32,7 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private List<Fragment> list = new ArrayList<>();
+    private List<Fragment> mList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +41,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);//标题与菜单
         setSupportActionBar(toolbar);//添加支持
 
-        list.add(new TestFragment0());
-        list.add(new TestFragment1());
-        list.add(new TestFragment2());
-        list.add(new TestFragment3());
+        mList.add(new TestFragment0());
+        mList.add(new TestFragment1());
+        mList.add(new TestFragment2());
+        mList.add(new TestFragment3());
 
         setTitle(R.string.index_text0);
         selectItem(0);
@@ -57,6 +61,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);//左侧抽屉菜单子项
         navigationView.setNavigationItemSelectedListener(this);
 
+
+    }
+
+    //初始化布局
+    private void initView() {
+//        startService(new Intent(this, MyIntentService.class));
     }
 
     //左侧抽屉式菜单响应操作
@@ -127,10 +137,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // 根据位置更新内容页
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(R.id.content_frame, list.get(position));
+        ft.replace(R.id.content_frame, mList.get(position));
         ft.commit();
         // update selected item title, then close the drawer
 //        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    @Subscribe()
+    public void onMessageEvent(MessageEvent event) {
+        Toast.makeText(this, event.message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
 }
