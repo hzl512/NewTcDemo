@@ -105,6 +105,8 @@ public class ClipImageResultActivity extends Activity {
         if (requestCode== PHOTO_PICKED_WITH_DATA) {
             Uri uri = data.getData();
             String currentFilePath = GetPathFromUri4kitkatUtil.getPath(this, uri);
+            File file=new File(currentFilePath);
+            if (file.length()<=0) return;
             Log.d("ClipImageResultActivity", "uri =" + uri.toString() + "存储卡中图片的路径是 = " + currentFilePath +"  保存的路径"+FileUtil.getDiskCacheDir(ClipImageResultActivity.this));
             if (!TextUtils.isEmpty(currentFilePath)) {
                 ClipImageActivity.prepare()
@@ -115,6 +117,8 @@ public class ClipImageResultActivity extends Activity {
         }
         if (requestCode== CAMERA_WITH_DATA) {
             String currentFilePath =  mCurrentPhotoFile.getPath();
+            File file=new File(currentFilePath);
+            if (file.length()<=0) return;
             Log.d("ClipImageResultActivity", "存储卡中图片的路径是 = " + currentFilePath +"  保存的路径"+FileUtil.getDiskCacheDir(ClipImageResultActivity.this));
             if (!TextUtils.isEmpty(currentFilePath)) {
                 ClipImageActivity.prepare()
