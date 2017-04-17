@@ -200,7 +200,9 @@ public class ClipImageActivity extends Activity implements View.OnClickListener 
                 if (!bitmap.isRecycled()) {
                     bitmap.recycle();
                 }
+
                 setResult(Activity.RESULT_OK, getIntent());
+
             } catch (Exception e) {
                 Log.v("ClipImageResultActivity",e.toString());
                 Toast.makeText(ClipImageActivity.this, R.string.msg_could_not_save_photo, Toast.LENGTH_SHORT).show();
